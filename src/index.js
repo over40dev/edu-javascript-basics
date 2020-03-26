@@ -1,4 +1,6 @@
-import './_15-while-loops';
+import currFunc from './basics';
+
+currFunc();
 
 // import Phaser from "phaser";
 // import logoImg from "./assets/logo.png";
