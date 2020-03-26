@@ -49,10 +49,58 @@ const forLoops = () => {
   logMessage(17, 'for-loops', 'end');
 }
 
-export default forLoops;
+const objects = () => {
+  const gameChar = {
+    name: 'Ted',
+    type: 'Human',
+    health: 100,
+    get title() {
+      return `${this.name}, the ${this.type}`;
+    },
+    get myHealth() {
+      let msg = `My health is ${this.health}`;
+      return msg.toUpperCase();
+    },
+    set maxHealth(h) {
+      this.health = h;
+    },
+    xPos: 0,
+    items: ['Knife', 'Food'],
+    move: function(x) {
+      console.log(this);
+      this.xPos += x;
+    },
+  }
 
-function logMessage(num, section, ext) {
-  console.log(`${num}-${section}-${ext}`);
+  logMessage(18, 'objects', 'name: ', gameChar.name);
+  gameChar.items.push('Axe', 'Water');
+  logMessage(18, 'objects', 'items: ', gameChar.items);
+  
+  gameChar.yPos = 5;
+  const gc = gameChar;
+
+  gc.maxHealth = 150;
+  console.log('health: ', gc.myHealth);
+  console.log('maxHealth: ', gc.maxHealth);
+
+  logMessage(18, 'objects', 'title: ', gc.title, gameChar.title, gc.name === gameChar.name);
+  
+  gc.moveXY = function(x,y) {
+    this.xPos += x;
+    this.yPos += y;
+  };
+
+  gameChar.move(5);
+  gameChar.moveXY(10, 10);
+  gc.name = 'unwise change --- ref not copy';
+
+  logMessage(18, 'objects', 'gameChar: ', gameChar, 'gc: ', gc);
+}
+
+export default objects;
+
+function logMessage(num, section, ext, ...rest) {
+  console.log(`${num}-${section}-${ext}`, ...rest);
 }
 
 function movePlayer({ xPos, endPos, enemyPos }) {
