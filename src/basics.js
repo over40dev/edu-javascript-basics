@@ -113,7 +113,40 @@ const objectFuncs = () => {
   logMessage(20, 'object-functions', 'end', 'gc1 = ', gc1, 'gc2 = ', gc2);
 }
 
-export default objectFuncs;
+const objectPrototypes = () => {
+  logMessage(21, 'object-prototypes', 'begin');
+
+  const gc = [
+    new gameChar('Sean', 0, 100),
+    new gameChar('Ted', 100, 150),
+  ];
+
+  gameChar.prototype.type = 'Human';
+  gameChar.prototype.heal = function(amount) {
+    this.health += amount;
+  };
+  
+  gc[0].move(10);
+  gc[0].yPos = 50;
+  gc[1].move(30);
+  gc[1].health = 200;
+  console.table(gc);
+
+  gc[0].heal(15);
+  gc[1].heal(25);
+  gc[1].type = 'Monster';
+
+  console.log(gc[0].type);
+  console.log(gc[1].type);
+
+  // console.log(gc[1].yPos); 
+  /* undefined, since not in constructor function 
+  and we did not initialize it separately either */
+
+  logMessage(21, 'object-prototypes', 'end', gc);
+}
+
+export default objectPrototypes;
 
 function logMessage(num, section, ext, ...rest) {
   console.log(`${num}-${section}-${ext}`, ...rest);
@@ -136,7 +169,7 @@ function gameChar(name, xPos, health) {
   this.name = name;
   this.xPos = xPos;
   this.health = health;
-  this.type = 'Human';
+  // this.type = type;
   this.move = (x) => {
     this.xPos += x;
   }
