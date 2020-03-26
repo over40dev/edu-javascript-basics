@@ -99,7 +99,21 @@ const objects = () => {
   logMessage(18, 'objects', 'end');
 }
 
-export default objects;
+const objectFuncs = () => {
+  logMessage(20, 'object-functions', 'begin');
+  
+  const gc1 = new gameChar('Sean', 0, 100);
+  const gc2 = new gameChar('Ted', 100, 150);
+  console.log(gc1.name);
+  console.log(gc2.name);
+  gc1.move(10);
+  gc2.move(30);
+  gc2.health = 200;
+
+  logMessage(20, 'object-functions', 'end', 'gc1 = ', gc1, 'gc2 = ', gc2);
+}
+
+export default objectFuncs;
 
 function logMessage(num, section, ext, ...rest) {
   console.log(`${num}-${section}-${ext}`, ...rest);
@@ -116,6 +130,17 @@ function movePlayer({ xPos, endPos, enemyPos }) {
       break;
     }
   }
+}
+
+function gameChar(name, xPos, health) {
+  this.name = name;
+  this.xPos = xPos;
+  this.health = health;
+  this.type = 'Human';
+  this.move = (x) => {
+    this.xPos += x;
+  }
+
 }
 
 
