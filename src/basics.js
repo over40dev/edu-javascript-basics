@@ -50,6 +50,7 @@ const forLoops = () => {
 }
 
 const objects = () => {
+  logMessage(18, 'objects', 'begin');
   const gameChar = {
     name: 'Ted',
     type: 'Human',
@@ -71,30 +72,31 @@ const objects = () => {
       this.xPos += x;
     },
   }
-
+  
   logMessage(18, 'objects', 'name: ', gameChar.name);
   gameChar.items.push('Axe', 'Water');
   logMessage(18, 'objects', 'items: ', gameChar.items);
   
   gameChar.yPos = 5;
   const gc = gameChar;
-
+  
   gc.maxHealth = 150;
   console.log('health: ', gc.myHealth);
   console.log('maxHealth: ', gc.maxHealth);
-
+  
   logMessage(18, 'objects', 'title: ', gc.title, gameChar.title, gc.name === gameChar.name);
   
   gc.moveXY = function(x,y) {
     this.xPos += x;
     this.yPos += y;
   };
-
+  
   gameChar.move(5);
   gameChar.moveXY(10, 10);
   gc.name = 'unwise change --- ref not copy';
-
+  
   logMessage(18, 'objects', 'gameChar: ', gameChar, 'gc: ', gc);
+  logMessage(18, 'objects', 'end');
 }
 
 export default objects;
