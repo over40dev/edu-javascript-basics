@@ -1,5 +1,4 @@
 import currFunc from './basics';
-
 currFunc();
 
 // import Phaser from "phaser";
