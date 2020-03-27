@@ -42,7 +42,7 @@ const forLoops = () => {
 
   // [].forEach()
   items.forEach((item, i) => {
-    finalString += (i+1 < items.length) ? `${items[i]}, ` : `and ${items[i]}!`; 
+    finalString += (i + 1 < items.length) ? `${items[i]}, ` : `and ${items[i]}!`;
   });
 
   logMessage(17, 'for-loops', finalString);
@@ -67,41 +67,41 @@ const objects = () => {
     },
     xPos: 0,
     items: ['Knife', 'Food'],
-    move: function(x) {
+    move: function (x) {
       console.log(this);
       this.xPos += x;
     },
   }
-  
+
   logMessage(18, 'objects', 'name: ', gameChar.name);
   gameChar.items.push('Axe', 'Water');
   logMessage(18, 'objects', 'items: ', gameChar.items);
-  
+
   gameChar.yPos = 5;
   const gc = gameChar;
-  
+
   gc.maxHealth = 150;
   console.log('health: ', gc.myHealth);
   console.log('maxHealth: ', gc.maxHealth);
-  
+
   logMessage(18, 'objects', 'title: ', gc.title, gameChar.title, gc.name === gameChar.name);
-  
-  gc.moveXY = function(x,y) {
+
+  gc.moveXY = function (x, y) {
     this.xPos += x;
     this.yPos += y;
   };
-  
+
   gameChar.move(5);
   gameChar.moveXY(10, 10);
   gc.name = 'unwise change --- ref not copy';
-  
+
   logMessage(18, 'objects', 'gameChar: ', gameChar, 'gc: ', gc);
   logMessage(18, 'objects', 'end');
 }
 
 const objectFuncs = () => {
   logMessage(20, 'object-functions', 'begin');
-  
+
   const gc1 = new gameChar('Sean', 0, 100);
   const gc2 = new gameChar('Ted', 100, 150);
   console.log(gc1.name);
@@ -122,10 +122,10 @@ const objectPrototypes = () => {
   ];
 
   gameChar.prototype.type = 'Human';
-  gameChar.prototype.heal = function(amount) {
+  gameChar.prototype.heal = function (amount) {
     this.health += amount;
   };
-  
+
   gc[0].move(10);
   gc[0].yPos = 50;
   gc[1].move(30);
@@ -146,7 +146,35 @@ const objectPrototypes = () => {
   logMessage(21, 'object-prototypes', 'end', gc);
 }
 
-export default objectPrototypes;
+const jsClass = () => {
+
+  logMessage(22, 'js-classes', 'begin');
+  
+  const hgc = [
+    new GameClassChar('Sean', 0, 100),
+    new HumanChar('Ted', 100, 150),
+  ];
+
+  
+  hgc[0].move(10);
+  hgc[0].yPos = 50;
+  hgc[1].move(30);
+  hgc[1].health = 200;
+  console.table(hgc);
+
+  // hgc[0].heal(150); /* heal not available on base class GameClassChar */
+  hgc[1].heal(250);
+  hgc[1].type = 'Monster';
+
+  console.log(hgc[0].type);
+  console.log(hgc[1].type);
+  
+  console.table(hgc);
+
+  logMessage(22, 'js-classes', 'end');
+}
+
+export default jsClass;
 
 function logMessage(num, section, ext, ...rest) {
   console.log(`${num}-${section}-${ext}`, ...rest);
@@ -169,11 +197,35 @@ function gameChar(name, xPos, health) {
   this.name = name;
   this.xPos = xPos;
   this.health = health;
-  // this.type = type;
   this.move = (x) => {
     this.xPos += x;
   }
 
+}
+
+class GameClassChar {
+
+  constructor(name, xPos, health) {
+    this.name = name;
+    this.xPos = xPos;
+    this.health = health;
+  }
+
+  move(x) {
+    this.xPos += x;
+  }
+}
+
+class HumanChar extends GameClassChar {
+
+  constructor(name, xPos, health) {
+    super(name, xPos, health);
+    this.type = 'Human';
+  }
+
+  heal(amount) {
+    this.health += amount;
+  }
 }
 
 
